@@ -1,0 +1,11 @@
+#zips
+*.zip
+
+# source images
+source
+
+# generated resources
+resources
+
+# disabled ini
+DISABLED*.ini
