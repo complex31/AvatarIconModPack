@@ -9,3 +9,6 @@ resources
 
 # disabled ini
 DISABLED*.ini
+
+# webp converter
+webp-to-png.py

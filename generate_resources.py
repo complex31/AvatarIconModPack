@@ -42,6 +42,10 @@ os.makedirs(f"resources", exist_ok=True)
 original_names = os.listdir("original")
 args = sys.argv
 force = args[1:]
+if (len(force) > 0):
+    print(f"selective for {force}")
+    original_names = force
+
 
 for name in original_names:
     os.makedirs(f"resources/{name}", exist_ok=True)
@@ -60,4 +64,3 @@ for name in original_names:
             output_index=str(index)
             )
         index += 1
-    break

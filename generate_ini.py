@@ -78,6 +78,7 @@ def parseFile(file):
 original_names = os.listdir("original")
 args = sys.argv
 if (len(args)>1):
+    print("selective mode");
     original_names = args[1:]
 
 files = os.listdir(".")
