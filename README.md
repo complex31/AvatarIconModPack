@@ -4,13 +4,14 @@ This set of scripts can be used to generate mod pack for a certain anime game. R
 **Note**: This repository does not include source images for the above mod.
 
 ## Requirements
-Python 3
+- Python 3
+- PNG images for the custom icons
+
 
 ### For selector GUI
-Tkinter
-Pillow
+- Tkinter
+- Pillow
 
-PNG images for the custom icons
 
 ## How to use
 Generate empty source folder
