@@ -32,7 +32,6 @@ def previous():
         currentImageIndex = len(available)-1
     currentImageIndex = str(currentImageIndex)
     updateImage()
-    print("previous")
 
 def next():
     global currentImageIndex
@@ -42,7 +41,6 @@ def next():
         currentImageIndex = 0
     currentImageIndex = str(currentImageIndex)
     updateImage()
-    print("next")
 
 def apply():
     print("applying")
@@ -70,7 +68,6 @@ def onselect(evt):
     w = evt.widget
     index = int(w.curselection()[0])
     value = w.get(index)
-    print('You selected item %d: "%s"' % (index, value))
     global currentOverride
     currentOverride = overrides[index]
     global currentImageIndex
@@ -84,7 +81,6 @@ def updateImage():
     global sprite
     global image
     imagePath = f"{currentPath}/{currentImageIndex}.dds"
-    print(imagePath)
     pilImage = Image.open(imagePath)
     pilImage = pilImage.transpose(Image.FLIP_TOP_BOTTOM)
     image = ImageTk.PhotoImage(pilImage)
@@ -109,7 +105,6 @@ scrollbar.config(command = listbox.yview)
 imagecanvas = Canvas(root,width=256,height=256)
 imagecanvas.pack(anchor=CENTER, padx=40, pady=40)
 imagePath = f"{currentPath}/{currentImageIndex}.dds"
-print(imagePath)
 pilImage = Image.open(imagePath)
 pilImage = pilImage.transpose(Image.FLIP_TOP_BOTTOM)
 image = ImageTk.PhotoImage(pilImage)
