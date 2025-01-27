@@ -6,6 +6,10 @@ This set of scripts can be used to generate mod pack for a certain anime game. R
 ## Requirements
 Python 3
 
+### For selector GUI
+Tkinter
+Pillow
+
 PNG images for the custom icons
 
 ## How to use

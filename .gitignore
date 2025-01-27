@@ -12,3 +12,11 @@ DISABLED*.ini
 
 # webp converter
 webp-to-png.py
+
+build
+dist
+
+*.exe
+*.spec
+
+upx
