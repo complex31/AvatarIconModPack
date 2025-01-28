@@ -19,22 +19,27 @@ def generate_dds(input_path, output_path, output_index):
 
 def resize(image):
     image = image.transpose(Image.FLIP_TOP_BOTTOM)
+    imageBox = image.getbbox()
+    image = image.crop(imageBox)
     width, height = image.size
     target_width, target_height = 256, 256
-    aspect_ratio = width / height
+    # aspect_ratio = width / height
+    side = int(max(width, height) * 1.05)
+    bg = Image.new("RGBA", (side, side), (0, 0, 0, 0))
+    bg.paste(image)
 
-    if aspect_ratio > 1:
-        # Then crop the left and right edges:
-        new_width = height
-        offset = (width - new_width) / 2
-        resize = (offset, 0, width - offset, height)
-    else:
-        # ... crop the top and bottom:
-        new_height = width
-        offset = (height - new_height) / 2
-        resize = (0, offset, width, height - offset)
+    # if aspect_ratio > 1:
+    #     # Then crop the left and right edges:
+    #     new_width = height
+    #     offset = (width - new_width) / 2
+    #     resize = (offset, 0, width - offset, height)
+    # else:
+    #     # ... crop the top and bottom:
+    #     new_height = width
+    #     offset = (height - new_height) / 2
+    #     resize = (0, offset, width, height - offset)
 
-    thumb = image.crop(resize).resize((target_width, target_height), Image.ANTIALIAS)
+    thumb = bg.resize((target_width, target_height), Image.LANCZOS)
     return thumb
 
 
@@ -54,8 +59,8 @@ for name in original_names:
     if len(input_files) == 0:
         continue
     index = 0
-    if len(input_files) <= len(output_files) and name not in force:
-        continue
+    #if len(input_files) <= len(output_files) and name not in force:
+    #    continue
     print(f"generating resources for {name}")
     for filename in input_files:
         generate_dds(
