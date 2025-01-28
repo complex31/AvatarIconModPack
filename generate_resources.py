@@ -11,7 +11,7 @@ def generate_dds(input_path, output_path, output_index):
         img = Image.open(input_path)
         img = resize(img)
         img.save(output_file_png, 'PNG', srgb=False)
-        subprocess.run(["texconv.exe", "-f", "BC7_UNORM", "-y", "-sepalpha", "-srgb", "-m", "1", "-o", ".", output_file_png])
+        subprocess.run(["texconv.exe", "-f", "BC7_UNORM", "-y", "-sepalpha", "-srgb", "-m", "1", "-o", ".", output_file_png], stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
         os.remove(output_file_png)
     except Exception as e:
         print(e)
@@ -29,13 +29,13 @@ def resize(image):
     bg = Image.new("RGBA", (side, side), (0, 0, 0, 0))
     box = [0,0]
     if (width>height):
-        box[1] = int((width - height)*0.5)
+        box[1] = 0 # int((width - height)*0.5)
     else:
         box[0] = int((height-width)*0.5)
     bg.paste(image, box=box)
     padded = int(side * 1.05)
     bg2 = Image.new("RGBA", (padded, padded), (0, 0, 0, 0))
-    box2 = [int((padded-side)*0.5)]*2
+    box2 = [int((padded-side)*0.5), 0]
     bg2.paste(bg, box=box2)
 
     # if aspect_ratio > 1:
