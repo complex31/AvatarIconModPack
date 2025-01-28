@@ -2,7 +2,6 @@ import os
 from tkinter import *
 from PIL import Image
 from PIL import ImageTk
-import fileinput
 
 overrides = []
 paths = []
@@ -19,6 +18,7 @@ iniFile.close()
 currentOverride = overrides[0]
 currentPath = paths[0]
 currentImageIndex = imageIndices[0]
+overrideIndex = 0
 
 root = Tk() 
 root.title("Icon Selector")
@@ -62,6 +62,8 @@ def apply():
     newIniFile = open("mod.ini", "w")
     newIniFile.writelines(lines)
     newIniFile.close
+    global imageIndices
+    imageIndices[overrideIndex] = currentImageIndex
 
 
 def onselect(evt):
@@ -74,6 +76,8 @@ def onselect(evt):
     currentImageIndex = imageIndices[index]
     global currentPath
     currentPath = paths[index]
+    global overrideIndex
+    overrideIndex = index
     updateImage()
 
 def updateImage():
@@ -85,8 +89,6 @@ def updateImage():
     pilImage = pilImage.transpose(Image.FLIP_TOP_BOTTOM)
     image = ImageTk.PhotoImage(pilImage)
     imagecanvas.itemconfig(sprite, image = image)
-
-editable = fileinput.FileInput("mod.ini", inplace=1)
 
 clicked = StringVar()
 clicked.set(overrides[0])
