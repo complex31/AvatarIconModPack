@@ -13,7 +13,8 @@ def generate_dds(input_path, output_path, output_index):
         img.save(output_file_png, 'PNG', srgb=False)
         subprocess.run(["texconv.exe", "-f", "BC7_UNORM", "-y", "-sepalpha", "-srgb", "-m", "1", "-o", ".", output_file_png])
         os.remove(output_file_png)
-    except:
+    except Exception as e:
+        print(e)
         return
     return
 
@@ -24,9 +25,18 @@ def resize(image):
     width, height = image.size
     target_width, target_height = 256, 256
     # aspect_ratio = width / height
-    side = int(max(width, height) * 1.05)
+    side = int(max(width, height))
     bg = Image.new("RGBA", (side, side), (0, 0, 0, 0))
-    bg.paste(image)
+    box = [0,0]
+    if (width>height):
+        box[1] = int((width - height)*0.5)
+    else:
+        box[0] = int((height-width)*0.5)
+    bg.paste(image, box=box)
+    padded = int(side * 1.05)
+    bg2 = Image.new("RGBA", (padded, padded), (0, 0, 0, 0))
+    box2 = [int((padded-side)*0.5)]*2
+    bg2.paste(bg, box=box2)
 
     # if aspect_ratio > 1:
     #     # Then crop the left and right edges:
@@ -39,7 +49,7 @@ def resize(image):
     #     offset = (height - new_height) / 2
     #     resize = (0, offset, width, height - offset)
 
-    thumb = bg.resize((target_width, target_height), Image.LANCZOS)
+    thumb = bg2.resize((target_width, target_height), Image.LANCZOS)
     return thumb
 
 
@@ -61,7 +71,7 @@ for name in original_names:
     index = 0
     #if len(input_files) <= len(output_files) and name not in force:
     #    continue
-    print(f"generating resources for {name}")
+    print(f"generating resources for {name}: {len(input_files)}")
     for filename in input_files:
         generate_dds(
             input_path=f"source/{name}/{filename}",
