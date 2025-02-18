@@ -33,7 +33,8 @@ def resize(image):
     else:
         box[0] = int((height-width)*0.5)
     bg.paste(image, box=box)
-    padded = int(side * 1.05)
+    padding = 0.05
+    padded = int(side * (1+padding))
     bg2 = Image.new("RGBA", (padded, padded), (0, 0, 0, 0))
     box2 = [int((padded-side)*0.5), 0]
     bg2.paste(bg, box=box2)
