@@ -56,7 +56,7 @@ def findDuplicateSection(sections, section):
                 for l in s:
                     sl = l.strip()
                     if len(sl) > 1:
-                        trimmed.append(l.strip())
+                        trimmed.append(sl)
                 trimmed = trimmed[0:3]+[""]+trimmed[3:]
                 return trimmed
     print("adding new section "+override)
