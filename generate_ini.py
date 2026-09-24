@@ -43,6 +43,7 @@ def generateIniSection(name):
         ]
     return lines
 
+
 def findDuplicateSection(sections, section):
     override = ""
     for line in section:
@@ -91,22 +92,29 @@ if "mod.ini" in files:
     os.remove("mod.ini")
     iniFile = open("mod.ini", "a")
     for name in original_names:
-        section = generateIniSection(name)
-        section = findDuplicateSection(oldsections, section)
-        if not isFirst:
-            iniFile.write('\n')
-        for line in section:
-            iniFile.write(line+'\n')
-        iniFile.write('\n'+iniSeparator+'\n')
-        isFirst = False
+        try:
+            section = generateIniSection(name)
+            section = findDuplicateSection(oldsections, section)
+            if not isFirst:
+                iniFile.write('\n')
+            for line in section:
+                iniFile.write(line+'\n')
+            iniFile.write('\n'+iniSeparator+'\n')
+            isFirst = False
+        except:
+            print(f"skipped resource {name}")
 else:
     print("generating new file")
     iniFile = open("mod.ini", "a")
     for name in original_names:
-        section = generateIniSection(name)
-        if not isFirst:
-            iniFile.write('\n')
-        for line in section:
-            iniFile.write(line+'\n')
-        iniFile.write('\n'+iniSeparator+'\n')
-        isFirst = False
+        try:
+            section = generateIniSection(name)
+            if not isFirst:
+                iniFile.write('\n')
+            for line in section:
+                iniFile.write(line+'\n')
+            iniFile.write('\n'+iniSeparator+'\n')
+            isFirst = False
+        except:
+            print(f"skipped resource {name}")
+            
